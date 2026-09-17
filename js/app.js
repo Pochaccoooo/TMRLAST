@@ -293,7 +293,7 @@ async function draw(){
   if(state.status==='connecting'){
     main.append(h('div',{class:'stack'},h('div',{class:'skeleton'}),h('div',{class:'skeleton'}),h('div',{class:'skeleton'})));
   } else {
-    if(!state.live) main.append(h('div',{class:'banner amber'},h('span',{class:'dot'}),h('div',null,h('b',null,'โหมดสาธิต '),'หน้านี้เปิดแบบไฟล์เดี่ยว จึงแสดงข้อมูลตัวอย่างและไม่บันทึกการเปลี่ยนแปลง เปิดผ่านลิงก์ระบบภายในของแผนกเพื่อใช้งานร่วมกับทีม')));
+    if(!state.live){ /* ยังไม่ได้ตั้งค่า Supabase ใน js/config.js: ใช้ข้อมูลตัวอย่างในหน่วยความจำ */ }
     else if(!state.me.id) main.append(h('div',{class:'banner amber'},h('span',{class:'dot'}),h('div',null,'ไม่พบตัวตนของคุณในองค์กร คุณดูเนื้อหาได้แต่โพสต์หรือแก้โปรไฟล์ไม่ได้')));
     else if(state.canWrite===false) main.append(h('div',{class:'banner'},h('div',null,'บัญชีของคุณมีสิทธิ์ดูอย่างเดียว ขอสิทธิ์ "โต้ตอบได้" จากผู้ดูแลเพื่อโพสต์และแก้โปรไฟล์')));
     const v=state.view;
@@ -1577,7 +1577,8 @@ async function renderCalendar(){
     if(!groups.size) card.append(h('div',{class:'empty-note'},'ยังไม่มีกิจกรรมใน 30 วันข้างหน้า'));
     for(const [k,list] of groups){
       const ts=keyToDate(k).getTime();
-      card.append(h('div',{class:'cal-group'},h('span',{class:'eyebrow'},h('b',null,dayLabel(ts)),fmtDay(ts)),h('div',{class:'cal-list'},list.map(x=>renderCalItem(x,ppl)))));
+      const lbl=dayLabel(ts), full=fmtDay(ts);
+      card.append(h('div',{class:'cal-group'},h('span',{class:'eyebrow'},h('b',null,lbl),lbl===full?'':full),h('div',{class:'cal-list'},list.map(x=>renderCalItem(x,ppl)))));
     }
     side.append(card);
   }
