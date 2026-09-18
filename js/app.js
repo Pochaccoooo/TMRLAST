@@ -51,6 +51,7 @@ const demoData={
   },
   dm:{
     'demo-me__sample-arisa':{parts:['demo-me','sample-arisa'],lastAt:NOW-25*MIN,lastFrom:'sample-arisa',seen:{'demo-me':NOW-3*HOUR+5*MIN},createdAt:NOW-2*DAY,msgs:[
+      {f:'sample-arisa',t:NOW-2*DAY+HOUR,sys:'call',kind:'audio',status:'ended',dur:312},
       {f:'demo-me',t:NOW-3*HOUR-10*MIN,plain:true,text:'พี่อริสา ขอไฟล์เกณฑ์คัดกรอง Cabin Crew รุ่น 12 หน่อยครับ'},
       {f:'sample-arisa',t:NOW-3*HOUR,plain:true,text:'ได้เลย เดี๋ยวส่งให้ทาง SharePoint นะคะ'},
       {f:'sample-arisa',t:NOW-25*MIN,plain:true,text:'ส่งแล้วค่ะ ลองเปิดดูแล้วบอกด้วยว่าเห็นไหม'}]},
@@ -111,7 +112,12 @@ const ICON={
   like:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3Zm0 0 4-7a2.3 2.3 0 0 1 2.3 2.3V10h5.2a2 2 0 0 1 2 2.3l-1.1 6.3A2 2 0 0 1 17.4 20H7"/></svg>',
   comment:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>',
   msg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5C6.5 2.5 2.2 6.6 2.2 11.7c0 2.9 1.4 5.5 3.6 7.2v3.6l3.4-1.9c.9.3 1.8.4 2.8.4 5.5 0 9.8-4.1 9.8-9.3S17.5 2.5 12 2.5Zm1 12.4-2.5-2.7-4.9 2.7 5.4-5.7 2.6 2.7 4.8-2.7-5.4 5.7Z"/></svg>',
-  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a6 6 0 0 1 12 0v4.3l1.6 2.7c.4.7-.1 1.5-.9 1.5H5.3c-.8 0-1.3-.8-.9-1.5L6 12.8V8.5Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>'
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a6 6 0 0 1 12 0v4.3l1.6 2.7c.4.7-.1 1.5-.9 1.5H5.3c-.8 0-1.3-.8-.9-1.5L6 12.8V8.5Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>',
+  video:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h11a2 2 0 0 1 2 2v1.5l4-2.5v10l-4-2.5V16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/></svg>',
+  camoff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v.5a1.5 1.5 0 0 1-1.5 1.5H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1M9 6h6a2 2 0 0 1 2 2v1.5l4-2.5v8"/><path d="M3 3l18 18"/></svg>',
+  mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  micoff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9.5V6a3 3 0 0 1 6 0v5a3 3 0 0 1-.6 1.8M5 11a7 7 0 0 0 10.6 6M19 11a7 7 0 0 1-.8 3.3M12 18v3"/><path d="M3 3l18 18"/></svg>'
 };
 function svg(name,size){ return h('span',{svg:ICON[name],style:`display:inline-flex;width:${size||16}px;height:${size||16}px;vertical-align:-3px`}); }
 function initials(name){ return (name||'?').trim().split(/\s+/).slice(0,2).map(w=>Array.from(w)[0]).join(''); }
@@ -308,6 +314,7 @@ async function draw(){
   }
   frag.append(main);
   if(ui.chatWith&&state.status==='ready') frag.append(await renderChatWin());
+  if(call.status!=='idle') frag.append(await renderCallOverlay());
   const f=captureFocus();
   root.replaceChildren(frag);
   restoreFocus(f);
@@ -1156,6 +1163,7 @@ async function getKeyFor(other){
   const key=await sharedKey(state.dm.priv,pub).catch(()=>null); state.dm.derived.set(other,{sig,key}); return key;
 }
 async function plainText(m,other){
+  if(m.sys==='call') return callLogText(m);
   if(m.plain) return String(m.text||'');
   const ck=other+':'+(m.t||0)+':'+String(m.c||'').slice(0,24);
   if(state.dm.cache.has(ck)) return state.dm.cache.get(ck);
@@ -1197,6 +1205,7 @@ async function notifyNewDM(other){
 }
 function buildNotifs(){
   const me=state.me.id; if(!me) return []; const out=[];
+  for(const c of myConvs()) for(const m of (c.msgs||[])) if(m.sys==='call'&&m.f!==me&&m.status==='missed') out.push({type:'call',fromId:m.f,at:m.t||0,text:'โทรหาคุณ แต่คุณไม่ได้รับสาย',preview:m.kind==='video'?'วิดีโอคอล':'สายเสียง',ref:{view:'chat',with:m.f}});
   for(const [pid,p] of Object.entries(state.data.posts)){
     if(p.authorId!==me) continue;
     for(const c of (p.comments||[])) if(c.authorId&&c.authorId!==me) out.push({type:'comment',fromId:c.authorId,at:c.createdAt||0,text:'แสดงความคิดเห็นในโพสต์ของคุณ',preview:c.text,ref:{view:'feed',post:pid}});
@@ -1219,6 +1228,7 @@ function markNotifsSeen(){
 }
 function goNotif(n){
   const r=n.ref||{};
+  if(r.view==='chat'){ openChat(r.with); return; }
   if(r.view==='feed'){ ui.scrollToPost=r.post; go('feed'); }
   else if(r.view==='opps'){ ui.expandedOpp=r.opp; go('opps'); }
   else if(r.view==='profile'){ go('profile',state.me.id); }
@@ -1270,9 +1280,10 @@ async function renderChatWin(){
   if(msgs.length){
     let lastDay='';
     for(const m of msgs){
-      const text=await plainText(m,other);
       const day=new Date(m.t||0).toDateString();
       if(day!==lastDay){ body.append(h('div',{class:'bubble-time'},dayLabel(m.t||0)+' '+fmtTime(m.t||0))); lastDay=day; }
+      if(m.sys==='call'){ body.append(h('div',{class:'bubble-sys'},callLogText(m)+' · '+fmtTime(m.t||0))); continue; }
+      const text=await plainText(m,other);
       body.append(h('div',{class:'bubble-row'+(m.f===me?' me':'')},m.f!==me?avatar(p,24):null,h('div',{class:'bubble',title:fmtTime(m.t||0)},text==null?'[ถอดรหัสไม่ได้]':text)));
     }
   } else body.append(h('div',{class:'note'},canSend?'เริ่มบทสนทนากับ '+p.name+' ข้อความเข้ารหัสแบบ end-to-end อ่านได้เฉพาะคุณสองคน':'ผู้รับยังไม่เคยเปิด Crew Room จึงยังไม่มีกุญแจสำหรับรับข้อความ ชวนให้เปิดระบบครั้งแรกก่อน'));
@@ -1280,13 +1291,216 @@ async function renderChatWin(){
   setTimeout(()=>{ const el=document.getElementById('dm-body'); if(el) el.scrollTop=el.scrollHeight; },0);
   return h('div',{class:'chatwin',role:'dialog','aria-label':'แชทกับ '+p.name},
     h('div',{class:'head'},avatar(p,34),h('div',{class:'txt'},h('b',null,p.name),h('span',null,prof&&prof.title?prof.title:'')),
+      h('button',{class:'btn ghost sm',title:'โทรด้วยเสียง','aria-label':'โทรด้วยเสียง',disabled:(!state.live||!canSend)?true:null,onclick:()=>startCall(other,'audio')},svg('phone',18)),
+      h('button',{class:'btn ghost sm',title:'วิดีโอคอล','aria-label':'วิดีโอคอล',disabled:(!state.live||!canSend)?true:null,onclick:()=>startCall(other,'video')},svg('video',18)),
       h('button',{class:'btn ghost sm',title:'ดูโปรไฟล์',onclick:()=>go('profile',other)},'โปรไฟล์'),
       h('button',{class:'btn ghost sm','aria-label':'ปิดหน้าต่างแชท',onclick:()=>{ui.chatWith=null;render();}},'✕')),
     body,
     h('div',{class:'foot'},inp,h('button',{class:'btn primary sm',disabled:(!canSend||!canAct())?true:null,onclick:submitDM},'ส่ง')));
 }
 
-/* ---------- membership: register / approve; login with PIN ---------- */
+/* ---------- voice / video calls: 1:1 WebRTC, signaling over Supabase Realtime ---------- */
+const RTC_CONFIG={iceServers:[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']}]};
+const call={id:null,peerId:null,kind:'audio',role:null,status:'idle',ch:null,inviteCh:null,pc:null,local:null,remote:null,startedAt:null,timer:null,timeout:null,iceBuf:[],iceTimer:null,pendingIce:[],ring:null,muted:false,camOff:false,els:null};
+let inboxCh=null;
+function callSetup(){
+  if(!sb||!state.me.id||inboxCh) return;
+  inboxCh=sb.channel('calls-'+state.me.id)
+    .on('broadcast',{event:'invite'},({payload})=>onCallInvite(payload||{}))
+    .on('broadcast',{event:'cancel'},({payload})=>{ const p=payload||{}; if(call.status==='ringing'&&call.id===p.callId) endCall('missed'); })
+    .subscribe();
+}
+function fmtDur(s){ s=Math.max(0,Math.round(s)); const m=Math.floor(s/60), r=s%60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; }
+function callLogText(m){
+  const kind=m.kind==='video'?'วิดีโอคอล':'สายเสียง', ico=m.kind==='video'?'📹 ':'📞 ';
+  if(m.status==='ended') return ico+kind+' '+fmtDur(m.dur||0);
+  if(m.status==='declined') return ico+kind+' · ปฏิเสธสาย';
+  if(m.status==='missed') return ico+kind+' · ไม่ได้รับสาย';
+  return ico+kind+' · ไม่สำเร็จ';
+}
+async function getCallMedia(kind){
+  const md=navigator.mediaDevices; if(!md||!md.getUserMedia) throw new Error('media unavailable');
+  if(kind==='video'){ try{ return await md.getUserMedia({video:{width:{ideal:1280},height:{ideal:720},facingMode:'user'},audio:true}); }catch(e){ console.warn('video unavailable, audio only',e); } }
+  return await md.getUserMedia({audio:true});
+}
+function openCallChannel(id){
+  const ch=sb.channel('call-'+id);
+  ch.on('broadcast',{event:'accept'},()=>onCallAccepted())
+    .on('broadcast',{event:'decline'},({payload})=>{ if(call.role==='caller') endCall((payload&&payload.reason)==='busy'?'busy':'declined'); })
+    .on('broadcast',{event:'sdp'},({payload})=>onCallSdp(payload||{}))
+    .on('broadcast',{event:'ice'},({payload})=>onCallIce(payload||{}))
+    .on('broadcast',{event:'hangup'},()=>endCall(call.status==='active'?'ended':'missed'))
+    .subscribe();
+  return ch;
+}
+function callSend(event,payload){ if(!call.ch) return; call.ch.send({type:'broadcast',event,payload:payload||{}}).catch(()=>{}); }
+async function startCall(otherId,kind){
+  if(!state.live||!sb){ toast('การโทรใช้ได้เมื่อเชื่อมต่อระบบแล้ว'); return; }
+  if(!canAct()||!otherId||otherId===state.me.id) return;
+  if(call.status!=='idle'){ toast('มีสายที่กำลังใช้งานอยู่'); return; }
+  if(!visibleMember(otherId)){ toast('โทรได้เฉพาะสมาชิกที่ได้รับอนุมัติแล้ว'); return; }
+  let stream; try{ stream=await getCallMedia(kind); }catch(e){ toast('เปิดไมค์หรือกล้องไม่ได้ ตรวจสอบการอนุญาตของเบราว์เซอร์'); return; }
+  Object.assign(call,{id:newId('c'),peerId:otherId,kind,role:'caller',status:'calling',local:stream,remote:null,startedAt:null,muted:false,camOff:stream.getVideoTracks().length===0,pendingIce:[],iceBuf:[],els:null});
+  call.ch=openCallChannel(call.id);
+  call.inviteCh=sb.channel('calls-'+otherId);
+  call.inviteCh.subscribe(status=>{ if(status==='SUBSCRIBED') call.inviteCh.send({type:'broadcast',event:'invite',payload:{callId:call.id,from:state.me.id,kind}}).catch(()=>{}); });
+  startRing('out');
+  call.timeout=setTimeout(()=>{ if(call.status==='calling'){ if(call.inviteCh) call.inviteCh.send({type:'broadcast',event:'cancel',payload:{callId:call.id}}).catch(()=>{}); endCall('missed'); } },45000);
+  ui.panel=null; render();
+}
+function onCallInvite(p){
+  if(!p.callId||!p.from||p.from===state.me.id) return;
+  if(call.status!=='idle'){
+    const ch=sb.channel('call-'+p.callId);
+    ch.subscribe(s=>{ if(s==='SUBSCRIBED'){ ch.send({type:'broadcast',event:'decline',payload:{reason:'busy'}}).catch(()=>{}); setTimeout(()=>{ try{ sb.removeChannel(ch); }catch(_){} },1500); } });
+    return;
+  }
+  Object.assign(call,{id:p.callId,peerId:p.from,kind:p.kind==='video'?'video':'audio',role:'callee',status:'ringing',local:null,remote:null,startedAt:null,muted:false,camOff:false,pendingIce:[],iceBuf:[],els:null});
+  call.ch=openCallChannel(call.id);
+  startRing('in');
+  call.timeout=setTimeout(()=>{ if(call.status==='ringing') endCall('missed'); },50000);
+  render();
+}
+async function acceptCall(){
+  if(call.status!=='ringing') return;
+  if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume().catch(()=>{});
+  let stream; try{ stream=await getCallMedia(call.kind); }catch(e){ toast('เปิดไมค์หรือกล้องไม่ได้ ตรวจสอบการอนุญาตของเบราว์เซอร์'); declineCall(); return; }
+  if(call.status!=='ringing'){ for(const t of stream.getTracks()) t.stop(); return; }
+  call.local=stream; call.camOff=stream.getVideoTracks().length===0; call.status='connecting';
+  stopRing(); clearTimeout(call.timeout);
+  ensurePC();
+  callSend('accept',{});
+  render();
+}
+function declineCall(){ if(call.status!=='ringing') return; callSend('decline',{reason:'declined'}); endCall('declined'); }
+function onCallAccepted(){
+  if(call.role!=='caller'||call.status!=='calling') return;
+  call.status='connecting'; stopRing(); clearTimeout(call.timeout);
+  if(call.inviteCh){ const c=call.inviteCh; call.inviteCh=null; setTimeout(()=>{ try{ sb.removeChannel(c); }catch(_){} },500); }
+  const pc=ensurePC();
+  pc.createOffer().then(o=>pc.setLocalDescription(o)).then(()=>callSend('sdp',{type:'offer',sdp:pc.localDescription.sdp})).catch(e=>{ console.error(e); endCall('failed'); });
+  render();
+}
+function ensurePC(){
+  if(call.pc) return call.pc;
+  const pc=new RTCPeerConnection(RTC_CONFIG); call.pc=pc; call.remote=new MediaStream();
+  if(call.local) for(const t of call.local.getTracks()) pc.addTrack(t,call.local);
+  if(call.kind==='video'&&!(call.local&&call.local.getVideoTracks().length)){ try{ pc.addTransceiver('video',{direction:'recvonly'}); }catch(_){} }
+  pc.ontrack=ev=>{ call.remote.addTrack(ev.track); ev.track.onended=()=>render(); attachCallMedia(); render(); };
+  pc.onicecandidate=ev=>{ if(!ev.candidate) return; call.iceBuf.push(ev.candidate.toJSON()); if(!call.iceTimer) call.iceTimer=setTimeout(()=>{ call.iceTimer=null; const cands=call.iceBuf.splice(0); if(cands.length) callSend('ice',{cands}); },200); };
+  pc.onconnectionstatechange=()=>{
+    if(call.pc!==pc) return;
+    if(pc.connectionState==='connected'&&call.status!=='active'){ call.status='active'; call.startedAt=Date.now(); clearInterval(call.timer); call.timer=setInterval(updateCallClock,1000); render(); }
+    else if(pc.connectionState==='failed'){ callSend('hangup',{}); endCall(call.status==='active'?'ended':'failed'); }
+    else if(pc.connectionState==='disconnected'){ setTimeout(()=>{ if(call.pc===pc&&pc.connectionState==='disconnected'){ callSend('hangup',{}); endCall('ended'); } },8000); }
+  };
+  return pc;
+}
+async function onCallSdp(p){
+  if(call.status==='idle') return;
+  try{
+    const pc=ensurePC();
+    if(p.type==='offer'){
+      if(call.role!=='callee') return;
+      await pc.setRemoteDescription({type:'offer',sdp:p.sdp});
+      for(const c of call.pendingIce.splice(0)) pc.addIceCandidate(c).catch(()=>{});
+      const ans=await pc.createAnswer(); await pc.setLocalDescription(ans);
+      callSend('sdp',{type:'answer',sdp:pc.localDescription.sdp});
+    } else if(p.type==='answer'&&pc.signalingState==='have-local-offer'){
+      await pc.setRemoteDescription({type:'answer',sdp:p.sdp});
+      for(const c of call.pendingIce.splice(0)) pc.addIceCandidate(c).catch(()=>{});
+    }
+  }catch(e){ console.error('call sdp',e); callSend('hangup',{}); endCall('failed'); }
+}
+function onCallIce(p){
+  const cands=Array.isArray(p.cands)?p.cands:[]; if(!cands.length||call.status==='idle') return;
+  const pc=call.pc; if(!pc||!pc.remoteDescription){ call.pendingIce.push(...cands); return; }
+  for(const c of cands) pc.addIceCandidate(c).catch(()=>{});
+}
+function hangupCall(){
+  if(call.status==='idle') return;
+  if(call.status==='calling'&&call.inviteCh) call.inviteCh.send({type:'broadcast',event:'cancel',payload:{callId:call.id}}).catch(()=>{});
+  callSend('hangup',{});
+  endCall(call.status==='active'?'ended':'missed');
+}
+function endCall(reason){
+  if(call.status==='idle') return;
+  const wasCaller=call.role==='caller', peer=call.peerId, kind=call.kind, dur=call.startedAt?(Date.now()-call.startedAt)/1000:0;
+  stopRing(); clearTimeout(call.timeout); clearInterval(call.timer); clearTimeout(call.iceTimer);
+  if(call.pc){ try{ call.pc.close(); }catch(_){} }
+  if(call.local) for(const t of call.local.getTracks()) t.stop();
+  const chs=[call.ch,call.inviteCh].filter(Boolean);
+  setTimeout(()=>{ for(const c of chs){ try{ sb.removeChannel(c); }catch(_){} } },800);
+  Object.assign(call,{id:null,peerId:null,role:null,status:'idle',ch:null,inviteCh:null,pc:null,local:null,remote:null,startedAt:null,timer:null,timeout:null,iceBuf:[],iceTimer:null,pendingIce:[],els:null,muted:false,camOff:false});
+  const label={ended:dur?'วางสายแล้ว ('+fmtDur(dur)+')':'วางสายแล้ว',declined:'อีกฝ่ายปฏิเสธสาย',missed:wasCaller?'ไม่มีผู้รับสาย':'สายที่ไม่ได้รับ',busy:'อีกฝ่ายกำลังใช้สายอยู่',failed:'เชื่อมต่อสายไม่สำเร็จ'}[reason]||'สิ้นสุดการโทร';
+  toast(label);
+  if(wasCaller) logCall(peer,kind,reason,dur).catch(e=>console.warn('call log',e));
+  render();
+}
+async function logCall(peer,kind,status,dur){
+  if(!state.live||!peer) return;
+  const me=state.me.id, id=convId(me,peer), cur=state.data.dm[id];
+  const msg={f:me,t:Date.now(),sys:'call',kind,status:(status==='busy'||status==='failed')?'missed':status,dur:Math.round(dur)};
+  const msgs=cur?clone(cur.msgs||[]):[]; msgs.push(msg); while(msgs.length>300) msgs.shift();
+  const now=Date.now();
+  if(cur) await updateDoc('dm',id,{msgs,lastAt:now,lastFrom:me,seen:{[me]:now}});
+  else await setDoc('dm',id,{parts:[me,peer],msgs,lastAt:now,lastFrom:me,seen:{[me]:now},createdAt:now});
+}
+function startRing(mode){
+  stopRing();
+  if(!audioCtx){ try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(_){ return; } }
+  const ctx=audioCtx; if(ctx.state==='suspended') ctx.resume().catch(()=>{});
+  const play=()=>{
+    try{
+      const o=ctx.createOscillator(), g=ctx.createGain(); o.type='sine'; o.frequency.value=mode==='in'?740:440;
+      o.connect(g); g.connect(ctx.destination); const t=ctx.currentTime; g.gain.setValueAtTime(0.0001,t);
+      if(mode==='in'){ g.gain.exponentialRampToValueAtTime(0.12,t+0.05); g.gain.setValueAtTime(0.12,t+0.35); g.gain.exponentialRampToValueAtTime(0.0001,t+0.42); g.gain.setValueAtTime(0.0001,t+0.55); g.gain.exponentialRampToValueAtTime(0.12,t+0.6); g.gain.setValueAtTime(0.12,t+0.9); g.gain.exponentialRampToValueAtTime(0.0001,t+0.97); o.start(t); o.stop(t+1); }
+      else { g.gain.exponentialRampToValueAtTime(0.1,t+0.05); g.gain.setValueAtTime(0.1,t+1.0); g.gain.exponentialRampToValueAtTime(0.0001,t+1.1); o.start(t); o.stop(t+1.2); }
+    }catch(_){}
+  };
+  play(); call.ring=setInterval(play,mode==='in'?2000:3500);
+}
+function stopRing(){ if(call.ring){ clearInterval(call.ring); call.ring=null; } }
+function callEls(){
+  if(!call.els){
+    const remote=h('video',{autoplay:true,playsinline:true,class:'call-remote'});
+    const local=h('video',{autoplay:true,playsinline:true,muted:true,class:'call-local'}); local.muted=true;
+    call.els={remote,local};
+  }
+  return call.els;
+}
+function attachCallMedia(){
+  const els=callEls();
+  if(call.remote&&els.remote.srcObject!==call.remote) els.remote.srcObject=call.remote;
+  if(call.local&&els.local.srcObject!==call.local) els.local.srcObject=call.local;
+}
+function updateCallClock(){ const el=document.getElementById('call-clock'); if(el&&call.startedAt) el.textContent=fmtDur((Date.now()-call.startedAt)/1000); }
+function toggleCallMic(){ if(!call.local) return; call.muted=!call.muted; for(const t of call.local.getAudioTracks()) t.enabled=!call.muted; render(); }
+function toggleCallCam(){ if(!call.local) return; const vs=call.local.getVideoTracks(); if(!vs.length){ toast('สายนี้ไม่มีภาพจากกล้อง'); return; } call.camOff=!call.camOff; for(const t of vs) t.enabled=!call.camOff; render(); }
+function callBtn(cls,icon,label,onclick){ return h('button',{class:'call-btn'+(cls?' '+cls:''),onclick},h('span',{class:'ico'},svg(icon,26)),h('span',{class:'lbl'},label)); }
+async function renderCallOverlay(){
+  const ppl=await people([call.peerId]); const p=ppl[call.peerId]||{name:'สมาชิก HR',color:'#6b7b86'};
+  const els=callEls(); attachCallMedia();
+  const kindLabel=call.kind==='video'?'วิดีโอคอล':'สายเสียง';
+  const statusText={calling:kindLabel+' · กำลังเรียก...',ringing:kindLabel+'เรียกเข้า',connecting:'กำลังเชื่อมต่อ...',active:kindLabel}[call.status]||'';
+  const remoteHasVideo=!!(call.remote&&call.remote.getVideoTracks().some(t=>t.readyState==='live'));
+  const showVideo=call.kind==='video'&&(call.status==='active'||call.status==='connecting');
+  const stage=h('div',{class:'call-stage'+(showVideo&&remoteHasVideo?' has-video':'')},
+    els.remote,
+    showVideo&&call.local&&!call.camOff?els.local:null,
+    h('div',{class:'call-id'},avatar(p,88),h('h2',null,p.name),h('div',{class:'call-status'},statusText,call.status==='active'?h('span',{id:'call-clock',class:'call-clock'},fmtDur(call.startedAt?(Date.now()-call.startedAt)/1000:0)):null)));
+  const controls=h('div',{class:'call-controls'});
+  if(call.status==='ringing'){
+    controls.append(callBtn('decline','phone','ปฏิเสธ',declineCall),callBtn('accept',call.kind==='video'?'video':'phone','รับสาย',acceptCall));
+  } else {
+    controls.append(callBtn(call.muted?'off':'',call.muted?'micoff':'mic',call.muted?'เปิดไมค์':'ปิดไมค์',toggleCallMic));
+    if(call.kind==='video') controls.append(callBtn(call.camOff?'off':'',call.camOff?'camoff':'video',call.camOff?'เปิดกล้อง':'ปิดกล้อง',toggleCallCam));
+    controls.append(callBtn('decline','phone','วางสาย',hangupCall));
+  }
+  return h('div',{class:'call-overlay',role:'dialog','aria-modal':'true','aria-label':'การโทร'},h('div',{class:'call-card'},stage,controls));
+}
+
+/* ---------- membership: register / approve ---------- */
 function memberOf(id){ return state.data.members[id]||null; }
 function isApproved(id){ const m=memberOf(id); return !!(m&&m.status==='approved'); }
 function myApproved(){ return !state.live||state.canEdit||isApproved(state.me.id); }
@@ -1652,6 +1866,7 @@ async function onSignedIn(session){
   state.auth.signedIn=true; state.status='ready'; render();
   await subscribe();
   initDM();
+  callSetup();
 }
 async function init(){
   render();
